@@ -6,9 +6,27 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    testerMLT = new TesterMLT;
+
+    testerMLT->tcpClientTester
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_buttonRandomCoordinates_2_released()
+{
+
+}
+
+void MainWindow::on_checkBox_toggled(bool checked)
+{
+
+}
+
+void MainWindow::on_buttonRandomCoordinates_released()
+{
+
 }

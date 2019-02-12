@@ -7,8 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     testerMLT = new TesterMLT;
-
-    testerMLT->tcpClientTester
 }
 
 MainWindow::~MainWindow()
@@ -30,3 +28,5 @@ void MainWindow::on_buttonRandomCoordinates_released()
 {
 
 }
+
+

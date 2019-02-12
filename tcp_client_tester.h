@@ -6,11 +6,27 @@
 #include <QtNetwork/QTcpSocket>
 
 
-class TCP_Client_Tester
+class TCP_Client_Tester : public QObject
 {
+    Q_OBJECT
+
 public:
+
     TCP_Client_Tester();
-    QTcpSocket* TcpSocket;
+    TCP_Client_Tester(QString _hostAddr, quint16 _portNumber);
+
+    QTcpSocket* clientTcpSocket;
+
+private:
+    QString hostAddr = "";
+    quint16 portNumber = 0;
+
+private slots:
+    void slotConnected();
+    void slotDisconnected();
+    void slotError(QAbstractSocket::SocketError);
+    void slotSendToServer();
+    void slotReadyRead();
 };
 
 #endif // TCP_CLIENT_TESTER_H

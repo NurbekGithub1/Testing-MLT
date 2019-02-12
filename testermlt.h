@@ -8,9 +8,16 @@
 class TesterMLT
 {
 public:
-     TesterMLT();
-     TCP_Client_Tester* tcpClientTester;
+    TesterMLT();
 
+    //objects
+    TCP_Client_Tester* tcpClientTester;
+
+    //functions
+
+private:
+    QString hostName = "";
+    int portNumber = 2323;
 
 };
 

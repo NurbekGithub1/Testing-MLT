@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>347</width>
+    <width>703</width>
     <height>420</height>
    </rect>
   </property>
@@ -138,6 +138,29 @@
     </property>
     <property name="text">
      <string>Activate random </string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="socketErrorInfo">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>30</y>
+      <width>271</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>200</y>
+      <width>231</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

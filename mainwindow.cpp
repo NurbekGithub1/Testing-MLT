@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     testerMLT = new TesterMLT;
+
+    connect(testerMLT,SIGNAL(signalSocketErrorInfoToWindow(QString)),this,SLOT(slotSocketErrorInfo(QString)));
 }
 
 MainWindow::~MainWindow()
@@ -27,6 +29,12 @@ void MainWindow::on_checkBox_toggled(bool checked)
 void MainWindow::on_buttonRandomCoordinates_released()
 {
 
+}
+
+void MainWindow::slotSocketErrorInfo(QString _socketError)
+{
+ui->socketErrorInfo->append(_socketError);
+ui->label->setText(_socketError);
 }
 
 

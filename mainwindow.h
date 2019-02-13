@@ -27,6 +27,8 @@ private slots:
 
     void on_buttonRandomCoordinates_released();
 
+    void slotSocketErrorInfo(QString);
+
 private:
     Ui::MainWindow *ui;
 };

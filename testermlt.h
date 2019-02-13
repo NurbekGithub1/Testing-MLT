@@ -4,9 +4,10 @@
 #include <QObject>
 #include <tcp_client_tester.h>
 
-
-class TesterMLT
+class TesterMLT: public QObject
 {
+    Q_OBJECT
+
 public:
     TesterMLT();
 
@@ -16,8 +17,15 @@ public:
     //functions
 
 private:
-    QString hostName = "";
-    int portNumber = 2323;
+    QString hostAddr = "localhost";
+    quint16 portNumber = 32002;
+
+private slots:
+    void slotSocketErrorInfo(QString);
+
+
+signals:
+    void signalSocketErrorInfoToWindow(QString);
 
 };
 

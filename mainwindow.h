@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <testermlt.h>
+#include <enums.h>
 
 namespace Ui {
 class MainWindow;
@@ -17,8 +18,6 @@ public:
     ~MainWindow();
 
     TesterMLT* testerMLT;
-    QString serverHostAddress;
-    int serverPortNumber;
 
 private slots:
     void on_buttonRandomCoordinates_2_released();
@@ -28,6 +27,8 @@ private slots:
     void on_buttonRandomCoordinates_released();
 
     void slotSocketErrorInfo(QString);
+
+    void slotSocketConnectedInfo();
 
 private:
     Ui::MainWindow *ui;

@@ -12,14 +12,18 @@ TCP_Client_Tester::TCP_Client_Tester(QString _hostAddr, quint16 _portNumber)
     portNumber = _portNumber;
     clientTcpSocket = new QTcpSocket;
 
+    if(!(QAbstractSocket::ConnectedState == clientTcpSocket->state()))
+        clientTcpSocket->connectToHost(hostAddr,portNumber,QIODevice::ReadWrite);
 
-    clientTcpSocket->connectToHost(hostAddr,portNumber);
-    connect(clientTcpSocket,SIGNAL(connected()),this,SLOT(slotConnected()));
-    connect(clientTcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()));
-    connect(clientTcpSocket,SIGNAL(readyRead()),this,SLOT(slotReadyRead()));
+    clientTcpSocket->waitForConnected(3000);
+
+    connect(clientTcpSocket,SIGNAL(connected()),this,SLOT(slotConnected()),Qt::ConnectionType::QueuedConnection);
+    connect(clientTcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()),Qt::ConnectionType::QueuedConnection);
+    connect(clientTcpSocket,SIGNAL(readyRead()),this,SLOT(slotReadyRead()),Qt::ConnectionType::QueuedConnection);
     connect(clientTcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),this, SLOT(slotError(QAbstractSocket::SocketError)));
 
 }
+
 
 void TCP_Client_Tester::slotConnected()
 {

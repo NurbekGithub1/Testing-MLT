@@ -17,15 +17,17 @@ public:
     //functions
 
 private:
-    QString hostAddr = "localhost";
-    quint16 portNumber = 32002;
+    QString hostAddr = "127.0.0.1";
+    quint16 portNumber = 32001;
 
 private slots:
     void slotSocketErrorInfo(QString);
+    void slotSocketConnectedInfo();
 
 
 signals:
     void signalSocketErrorInfoToWindow(QString);
+    void signalSocketConnectedInfoToWindow();
 
 };
 

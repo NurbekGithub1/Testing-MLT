@@ -34,7 +34,8 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     testermlt.h \
-    tcp_client_tester.h
+    tcp_client_tester.h \
+    enums.h
 
 FORMS += \
         mainwindow.ui

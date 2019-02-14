@@ -9,7 +9,10 @@ MainWindow::MainWindow(QWidget *parent) :
     testerMLT = new TesterMLT;
 
     connect(testerMLT,SIGNAL(signalSocketErrorInfoToWindow(QString)),this,SLOT(slotSocketErrorInfo(QString)));
-    connect(testerMLT,SIGNAL(signalSocketConnectedInfoToWindow()),this,SLOT(slotSocketConnectedInfo()));
+    connect(testerMLT,SIGNAL(signalSocketConnectedInfoToWindow(QAbstractSocket::SocketState)),this,SLOT(slotSocketConnectedInfo(QAbstractSocket::SocketState)));
+    connect(this,SIGNAL(buttonConnectToServerClicked()),testerMLT,SLOT(slotConnectToServer()));
+    connect(this,SIGNAL(buttonSendCoordinateClicked()),testerMLT,SLOT(slotSendCoordinateToServer()));
+
 }
 
 MainWindow::~MainWindow()
@@ -17,20 +20,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_buttonRandomCoordinates_2_released()
-{
-
-}
-
-void MainWindow::on_checkBox_toggled(bool checked)
-{
-
-}
-
-void MainWindow::on_buttonRandomCoordinates_released()
-{
-
-}
 
 void MainWindow::slotSocketErrorInfo(QString _socketError)
 {
@@ -41,11 +30,21 @@ void MainWindow::slotSocketErrorInfo(QString _socketError)
     ui->textBrowserConnectionState->setStyleSheet("QTextEdit{background-color:#FADBD8}");
 }
 
-void MainWindow::slotSocketConnectedInfo()
+void MainWindow::slotSocketConnectedInfo(QAbstractSocket::SocketState _socketState)
 {
     ui->textBrowserConnectionState->clear();
-    ui->textBrowserConnectionState->setText("Connected!");
+    ui->textBrowserConnectionState->setText(QString(_socketState));
     ui->textBrowserConnectionState->setStyleSheet("QTextEdit{background-color:#A9DFBF}");
 }
 
 
+
+void MainWindow::on_buttonSendCoordinates_clicked()
+{
+    emit buttonSendCoordinateClicked();
+}
+
+void MainWindow::on_buttonConnectToServer_clicked()
+{
+    emit buttonConnectToServerClicked();
+}

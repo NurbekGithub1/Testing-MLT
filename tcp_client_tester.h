@@ -3,7 +3,10 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QtNetwork/QTcpSocket>
+#include <QHostAddress>
+#include <QDebug>
+#include <QTcpSocket>
+#include <enums.h>
 
 class TCP_Client_Tester : public QObject
 {
@@ -20,16 +23,17 @@ private:
     QString hostAddr = " ";
     quint16 portNumber = 0;
 
-private slots:
+public slots:
     void slotConnected();
     void slotDisconnected();
     void slotError(QAbstractSocket::SocketError);
     void slotSendToServer();
     void slotReadyRead();
+    void slotConnectToServer();
 
 signals:
     void signalSocketError(QString);
-    void signalConnected();
+    void signalConnected(QAbstractSocket::SocketState);
 };
 
 #endif // TCP_CLIENT_TESTER_H

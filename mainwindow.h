@@ -20,15 +20,19 @@ public:
     TesterMLT* testerMLT;
 
 private slots:
-    void on_buttonRandomCoordinates_2_released();
-
-    void on_checkBox_toggled(bool checked);
-
-    void on_buttonRandomCoordinates_released();
 
     void slotSocketErrorInfo(QString);
 
-    void slotSocketConnectedInfo();
+    void slotSocketConnectedInfo(QAbstractSocket::SocketState);
+
+    void on_buttonSendCoordinates_clicked();
+
+    void on_buttonConnectToServer_clicked();
+
+signals:
+
+    void buttonConnectToServerClicked();
+    void buttonSendCoordinateClicked();
 
 private:
     Ui::MainWindow *ui;

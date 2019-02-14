@@ -22,12 +22,16 @@ private:
 
 private slots:
     void slotSocketErrorInfo(QString);
-    void slotSocketConnectedInfo();
+    void slotSocketConnectedInfo(QAbstractSocket::SocketState);
+    void slotConnectToServer();
+    void slotSendCoordinateToServer();
 
 
 signals:
     void signalSocketErrorInfoToWindow(QString);
-    void signalSocketConnectedInfoToWindow();
+    void signalSocketConnectedInfoToWindow(QAbstractSocket::SocketState);
+    void signalConnectToServer();
+    void signalSendCoordinateToServer();
 
 };
 

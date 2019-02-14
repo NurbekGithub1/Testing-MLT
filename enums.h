@@ -4,6 +4,8 @@
 enum class Messages
 {
     Connected,
+    Disconnected,
+    SendingToServer,
 };
 
 #endif // ENUMS_H

@@ -12,27 +12,42 @@ TCP_Client_Tester::TCP_Client_Tester(QString _hostAddr, quint16 _portNumber)
     portNumber = _portNumber;
     clientTcpSocket = new QTcpSocket;
 
-    if(!(QAbstractSocket::ConnectedState == clientTcpSocket->state()))
-        clientTcpSocket->connectToHost(hostAddr,portNumber,QIODevice::ReadWrite);
-
-    clientTcpSocket->waitForConnected(3000);
-
     connect(clientTcpSocket,SIGNAL(connected()),this,SLOT(slotConnected()),Qt::ConnectionType::QueuedConnection);
     connect(clientTcpSocket,SIGNAL(disconnected()),this,SLOT(slotDisconnected()),Qt::ConnectionType::QueuedConnection);
     connect(clientTcpSocket,SIGNAL(readyRead()),this,SLOT(slotReadyRead()),Qt::ConnectionType::QueuedConnection);
     connect(clientTcpSocket,SIGNAL(error(QAbstractSocket::SocketError)),this, SLOT(slotError(QAbstractSocket::SocketError)));
+    // qDebug() << clientTcpSocket->state();
+}
+
+void TCP_Client_Tester::slotConnectToServer()
+{
+    qDebug() << " CONNECTING TO SERVER (_log) ";
+    qDebug() << clientTcpSocket->state();
+    clientTcpSocket->connectToHost(QHostAddress::LocalHost,portNumber,QIODevice::ReadWrite);
+    qDebug() << clientTcpSocket->state();
 
 }
 
-
 void TCP_Client_Tester::slotConnected()
 {
-    emit signalConnected();
+    if(clientTcpSocket->state() == QAbstractSocket::SocketState::ConnectedState)
+        emit signalConnected(clientTcpSocket->state());
 }
 
 void TCP_Client_Tester::slotDisconnected()
 {
+    qDebug() << " slot disconnected!!!";
+}
 
+void TCP_Client_Tester::slotSendToServer()
+{
+    qDebug() << "Sending to server!!!";
+
+}
+
+void TCP_Client_Tester::slotReadyRead()
+{
+    qDebug() << "Slot readyRead!!!";
 }
 
 void TCP_Client_Tester::slotError(QAbstractSocket::SocketError _socketError)
@@ -43,43 +58,43 @@ void TCP_Client_Tester::slotError(QAbstractSocket::SocketError _socketError)
     switch(_socketError)
     {
     case 0:
-        socketErrorString = "The connection was refused by the peer (or timed out)";
+        socketErrorString = "Соединение было разорвано другим узлом (или по тайм-ауту).";
         break;
     case 1:
-        socketErrorString = "The remote host closed the connection";
+        socketErrorString = "Удалённый хост закрыл соединение. ";
         break;
     case 2:
-        socketErrorString = "The host address was not found";
+        socketErrorString = "Адрес узла не найден.";
         break;
     case 3:
-        socketErrorString = "The socket operation failed because the application lacked the required privileges";
+        socketErrorString = "Операция с сокетом была прервана, так как приложение не получило необходимых прав.";
         break;
     case 4:
-        socketErrorString = "The local system ran out of resources (e.g., too many sockets)";
+        socketErrorString = "У текущей системы не хватило ресурсов (например, слишком много сокетов).";
         break;
     case 5:
-        socketErrorString = "The socket operation timed out";
+        socketErrorString = "Время для операции с сокетом истекло.";
         break;
     case 6:
-        socketErrorString = "The datagram was larger than the operating system's limit (which can be as low as 8192 bytes)";
+        socketErrorString = "Дейтаграмма больше, чем установленное ограничение в операционной системе (которое может быть меньше, чем 8192 байт).";
         break;
     case 7:
-        socketErrorString = "An error occurred with the network (e.g., the network cable was accidentally plugged out)";
+        socketErrorString = "Произошла ошибка в сети (например, сетевой кабель был неожиданно отключён).";
         break;
     case 8:
-        socketErrorString = "The address specified to QAbstractSocket::bind() is already in use and was set to be exclusive";
+        socketErrorString = "Адрес, определённый в QUdpSocket::bind(), уже используется и установлен в состояние эксклюзивного использования.";
         break;
     case 9:
-        socketErrorString = "The address specified to QAbstractSocket::bind() does not belong to the host";
+        socketErrorString = "Адрес, определённый в QUdpSocket::bind(), не найден на узле.";
         break;
     case 10:
-        socketErrorString = "The requested socket operation is not supported by the local operating system (e.g., lack of IPv6 support)";
+        socketErrorString = "Запрашиваемая операция с сокетом не поддерживается текущей операционной системой (например, отсутствует поддержка IPv6).";
         break;
     case 11:
         socketErrorString = "Used by QAbstractSocketEngine only, The last operation attempted has not finished yet (still in progress in the background)";
         break;
     case 12:
-        socketErrorString = "The socket is using a proxy, and the proxy requires authentication";
+        socketErrorString = "Сокет использует прокси, который запрашивает аутентификацию.";
         break;
     case 13:
         socketErrorString = "The SSL/TLS handshake failed, so the connection was closed";
@@ -123,13 +138,3 @@ void TCP_Client_Tester::slotError(QAbstractSocket::SocketError _socketError)
 
 }
 
-void TCP_Client_Tester::slotSendToServer()
-{
-    signalConnected();
-
-}
-
-void TCP_Client_Tester::slotReadyRead()
-{
-
-}
